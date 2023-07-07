@@ -5,7 +5,8 @@ Ilya Seletsky 2015
 TODO (known issues):
 -Preview plane size setting (Width and Height)
 -Handle when scene is closed while window open to reset things if possible
--Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to display a preview plane
+-Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to
+    display a preview plane
 -Save settings between runs.
 -Fix window not shrinking properly when switching between plane modes.
 -Figure out what else crashes
@@ -23,20 +24,20 @@ import CoplanarJointOrient.mayaUtil
 import CoplanarJointOrient.MayaUIValue.VectorValue
 import functools
 
+
 class PositionValue(CoplanarJointOrient.MayaUIValue.VectorValue.VectorValue):
     def __init__(self, label=None, parentUI=None):
         super(PositionValue, self).__init__(label, parentUI)
-        
-        if(parentUI is not None):
-            cmds.button(self.fromSelectionsButton, edit=True, 
-                        command = functools.partial(PositionValue.onFromSelectionsPressed, self))
-        
+
+        if (parentUI is not None):
+            cmds.button(self.fromSelectionsButton, edit=True,
+                        command=functools.partial(PositionValue.onFromSelectionsPressed, self))
+
     def onFromSelectionsPressed(self, unused):
         self.computeFromSelections()
-        
+
     def computeFromNodes(self, nodes):
         self.setValue(CoplanarJointOrient.mayaUtil.getAverageNodePositions(nodes))
-        
+
     def computeFromSelections(self):
         self.computeFromNodes(cmds.ls(selection=True))
-        

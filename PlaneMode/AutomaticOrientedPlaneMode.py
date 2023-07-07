@@ -5,7 +5,8 @@ Ilya Seletsky 2015
 TODO (known issues):
 -Preview plane size setting (Width and Height)
 -Handle when scene is closed while window open to reset things if possible
--Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to display a preview plane
+-Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to
+    display a preview plane
 -Save settings between runs.
 -Fix window not shrinking properly when switching between plane modes.
 -Figure out what else crashes
@@ -24,29 +25,34 @@ import CoplanarJointOrient.mayaUtil
 import CoplanarJointOrient.PlaneMode.ChainDependantPlaneMode
 import CoplanarJointOrient.MayaUIValue.NormalModeValue
 
+
 class AutomaticOrientedPlaneMode(CoplanarJointOrient.PlaneMode.ChainDependantPlaneMode.ChainDependantPlaneMode):
     def __init__(self, coplanarizer):
         super(AutomaticOrientedPlaneMode, self).__init__(coplanarizer)
-        
+        self.advancedSettingsUI = None
+
     def setupUI(self, parentUI):
         self.setupValues(None)
-        self.planeNormalMode.setValue(CoplanarJointOrient.MayaUIValue.NormalModeValue.NormalModeValue.PLANE_NORMAL_MODE_2POINT_VECTOR)
-        
-        if(parentUI):        
+        self.planeNormalMode.setValue(
+            CoplanarJointOrient.MayaUIValue.NormalModeValue.NormalModeValue.PLANE_NORMAL_MODE_2POINT_VECTOR)
+
+        if parentUI:
             label = cmds.text(label="Automatic from orientations plane mode set", parent=parentUI)
-            
+
             cmds.formLayout(parentUI, edit=True, attachForm=[
-                                                             (label, "left", 0),
-                                                             (label, "top", 10),
-                                                             ])
-            
+                (label, "left", 0),
+                (label, "top", 10),
+            ])
+
             self.advancedSettingsUI = parentUI
-            
+
     def coplanarizerChainUpdated(self):
         super(AutomaticOrientedPlaneMode, self).coplanarizerChainUpdated()
-        
-        if(self.currentCoplanarizerChainRoot is not None and self.currentCoplanarizerChainEnd is not None):
+
+        if self.currentCoplanarizerChainRoot is not None and self.currentCoplanarizerChainEnd is not None:
             self.planePosition.computeFromNodes([self.currentCoplanarizerChainRoot])
-            self.planeNormalVector.computeFromNodes(CoplanarJointOrient.mayaUtil.getWholeParentChain(self.currentCoplanarizerChainRoot, self.currentCoplanarizerChainEnd))
+            self.planeNormalVector.computeFromNodes(
+                CoplanarJointOrient.mayaUtil.getWholeParentChain(self.currentCoplanarizerChainRoot,
+                                                                 self.currentCoplanarizerChainEnd))
             self.planeNormalPoint0.computeFromNodes([self.currentCoplanarizerChainRoot])
             self.planeNormalPoint1.computeFromNodes([self.currentCoplanarizerChainEnd])
