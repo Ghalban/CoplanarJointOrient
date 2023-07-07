@@ -3,6 +3,7 @@ Maya script to help riggers fix joints with a click of a button and make the ani
 
 # Coplanar joint orient tool 0.9.0
 Ilya Seletsky 2015
+Py3 conversion Rawda Elwalily 2023
 
 # Install instructions
 Requires Maya not Maya LT since this is written in Python, unless in the future Autodesk adds Python scripting to LT.  (I sure hope they do ;D)
