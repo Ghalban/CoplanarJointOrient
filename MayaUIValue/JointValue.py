@@ -5,7 +5,8 @@ Ilya Seletsky 2015
 TODO (known issues):
 -Preview plane size setting (Width and Height)
 -Handle when scene is closed while window open to reset things if possible
--Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to display a preview plane
+-Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to
+    display a preview plane
 -Save settings between runs.
 -Fix window not shrinking properly when switching between plane modes.
 -Figure out what else crashes
@@ -25,36 +26,41 @@ import functools
 import CoplanarJointOrient.mayaUtil
 import CoplanarJointOrient.CoplanarJointOrient
 
+
 class JointValue(CoplanarJointOrient.MayaUIValue.ValueBase.ValueBase):
     def __init__(self, label=None, parentUI=None):
         super(JointValue, self).__init__()
-        
-        if(parentUI is not None):
-            #TODO: figure out how to make eclipse stop complaining about WINDOW_WIDTH, has no issues with maya though
-            self.rootUI = cmds.textFieldButtonGrp(label=label, parent=parentUI, buttonLabel="Selection", columnWidth3 = [50, CoplanarJointOrient.CoplanarJointOrient.WINDOW_WIDTH - 150, 100],
-                                                                buttonCommand = functools.partial(JointValue.onSelectionPressed, self), 
-                                                                textChangedCommand = functools.partial(JointValue.onJointNameChanged, self))
-                        
+
+        if (parentUI is not None):
+            # TODO: figure out how to make eclipse stop complaining about WINDOW_WIDTH, has no issues with maya though
+            self.rootUI = cmds.textFieldButtonGrp(label=label, parent=parentUI, buttonLabel="Selection",
+                                                  columnWidth3=[50,
+                                                                CoplanarJointOrient.CoplanarJointOrient.WINDOW_WIDTH - 150,
+                                                                100],
+                                                  buttonCommand=functools.partial(JointValue.onSelectionPressed, self),
+                                                  textChangedCommand=functools.partial(JointValue.onJointNameChanged,
+                                                                                       self))
+
     def setValue(self, value):
-        if(self.rootUI is not None):
+        if (self.rootUI is not None):
             cmds.textFieldButtonGrp(self.rootUI, edit=True, text=value)
-            
+
         self.value = value
         self.callChangeFunc()
-            
+
     def onSelectionPressed(self):
         selection = CoplanarJointOrient.mayaUtil.getFirstSelectedObject()
-        
-        if(CoplanarJointOrient.mayaUtil.isJoint(selection)):                    
+
+        if (CoplanarJointOrient.mayaUtil.isJoint(selection)):
             cmds.textFieldButtonGrp(self.rootUI, edit=True, text=selection)
-            
+
     def onJointNameChanged(self, value):
         self.value = value
         self.callChangeFunc()
-        
+
     def setEnabled(self, enabled):
-        if(self.rootUI is not None):        
-            if(enabled):
+        if (self.rootUI is not None):
+            if (enabled):
                 cmds.textFieldButtonGrp(self.rootUI, edit=True, enable=True)
             else:
                 cmds.textFieldButtonGrp(self.rootUI, edit=True, enable=False)

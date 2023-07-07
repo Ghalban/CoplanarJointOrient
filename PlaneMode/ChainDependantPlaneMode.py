@@ -5,7 +5,8 @@ Ilya Seletsky 2015
 TODO (known issues):
 -Preview plane size setting (Width and Height)
 -Handle when scene is closed while window open to reset things if possible
--Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to display a preview plane
+-Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to
+    display a preview plane
 -Save settings between runs.
 -Fix window not shrinking properly when switching between plane modes.
 -Figure out what else crashes
@@ -20,6 +21,7 @@ Stretch goals:
 """
 import CoplanarJointOrient.PlaneMode.AdvancedPlaneMode
 
+
 class ChainDependantPlaneMode(CoplanarJointOrient.PlaneMode.AdvancedPlaneMode.AdvancedPlaneMode):
     def __init__(self, coplanarizer):
         super(ChainDependantPlaneMode, self).__init__(coplanarizer)
@@ -27,8 +29,10 @@ class ChainDependantPlaneMode(CoplanarJointOrient.PlaneMode.AdvancedPlaneMode.Ad
         self.currentCoplanarizerChainEnd = None
 
     def coplanarizerChainUpdated(self):
-        if(self.currentCoplanarizerChainRoot == self.coplanarizer.chainRoot and self.currentCoplanarizerChainEnd == self.coplanarizer.chainEnd):
+        if (
+                self.currentCoplanarizerChainRoot == self.coplanarizer.chainRoot
+                and self.currentCoplanarizerChainEnd == self.coplanarizer.chainEnd):
             return
-        
+
         self.currentCoplanarizerChainRoot = self.coplanarizer.chainRoot
         self.currentCoplanarizerChainEnd = self.coplanarizer.chainEnd

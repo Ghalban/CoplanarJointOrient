@@ -5,7 +5,8 @@ Ilya Seletsky 2015
 TODO (known issues):
 -Preview plane size setting (Width and Height)
 -Handle when scene is closed while window open to reset things if possible
--Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to display a preview plane
+-Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to
+    display a preview plane
 -Save settings between runs.
 -Fix window not shrinking properly when switching between plane modes.
 -Figure out what else crashes
@@ -20,23 +21,26 @@ Stretch goals:
 """
 import maya.api.OpenMaya as om
 
+
 class PlaneMode(object):
     def __init__(self, coplanarizer):
         self.coplanarizer = coplanarizer
         self.advancedSettingsUI = None
         self.alignmentPlane = om.MPlane()
         self.alignmentPlanePreviewLocation = om.MVector()
-        
+
     """
     Sets up the UI for the advanced options.
-    You still need to call this if UI isn't being set up with None as parentUI since this will still set up all the value objects.
+    You still need to call this if UI isn't being set up with None as parentUI since this will still set up all the 
+    value objects.
     ParentUI should be a form layout
     """
+
     def setupUI(self, parentUI):
         pass
-        
+
     def coplanarizerChainUpdated(self):
         pass
-            
+
     def updatePlane(self):
         self.coplanarizer.planeUpdated(self)

@@ -5,7 +5,8 @@ Ilya Seletsky 2015
 TODO (known issues):
 -Preview plane size setting (Width and Height)
 -Handle when scene is closed while window open to reset things if possible
--Make the preview plane creation somehow not contribute to the undo history if possible or find a different way to display a preview plane
+-Make the preview plane creation somehow not contribute to the undo history if possible or find a
+    different way to display a preview plane
 -Save settings between runs.
 -Fix window not shrinking properly when switching between plane modes.
 -Figure out what else crashes
@@ -22,18 +23,20 @@ Stretch goals:
 """
 Wrapper around some value and its associated UI, and makes the two stay in sync
 """
+
+
 class ValueBase(object):
-    def __init__(self):        
+    def __init__(self):
         self.value = None
         self.rootUI = None
         self.onChangeFunc = None
-                
+
     def setValue(self, value):
         pass
-    
+
     def callChangeFunc(self):
-        if(self.onChangeFunc is not None):
+        if self.onChangeFunc is not None:
             self.onChangeFunc(self.value)
-            
+
     def setEnabled(self, enabled):
         pass
